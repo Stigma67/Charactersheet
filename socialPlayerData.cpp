@@ -73,22 +73,20 @@ void SocialPlayerData::setComboBox(QComboBox *obj, std::vector<QString> items, b
 
 void SocialPlayerData::setTable(QTableWidget *obj, QStringList titel)
 {
+	obj->setColumnCount(1);
+	obj->setColumnWidth(0, 300);
+	obj->setHorizontalHeaderLabels(titel);
 	obj->setRowCount(5);
+	obj->verticalHeader()->setVisible(false);
+
 	for (int var = 0; var < 5; ++var)
 	{
 		obj->setRowHeight(var, 22);
 	}
 
-	obj->verticalHeader()->setVisible(false);
-
-	obj->setColumnCount(1);
-	obj->setColumnWidth(0, 300);
-	obj->setHorizontalHeaderLabels(titel);
-	obj->setSelectionMode(QTableWidget::NoSelection);
-
 	obj->setFixedSize(300, 133);
-
 	obj->setFont(QFont("Times New Roman", 12));
+	obj->setSelectionMode(QTableWidget::NoSelection);
 }
 
 void SocialPlayerData::setFont(QWidget *obj, int size)

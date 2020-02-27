@@ -11,6 +11,7 @@
 class AdventurePoints
 {
 private:
+	//	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>GUI>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	QSpinBox* m_SpinBox_APAll = new QSpinBox;
 
 	struct Layout
@@ -50,6 +51,7 @@ private:
 	void initGUI();
 
 	void setFont(QWidget* obj);
+	//	<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GUI<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 public:
 	AdventurePoints();

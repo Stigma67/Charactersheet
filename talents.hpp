@@ -22,35 +22,34 @@ private:
 		NATURTALENTE,
 		WISSENSTALENTE
 	};
-	struct TalentData
+	struct TalentGUI
 	{
 		QString NameTalent;
 		QString NamePropertyOne;
 		QString NamePropertyTwo;
 		QString NamePropertyThree;
-		unsigned int Value;
-		QLabel* LabelTalent;
-		QLabel* LabelPropertyOne;
-		QLabel* LabelPropertyTwo;
-		QLabel* LabelPropertyThree;
+		QTableWidgetItem* TableWidgetItemTalent;
+		QTableWidgetItem* TableWidgetItemPropertyOne;
+		QTableWidgetItem* TableWidgetItemPropertyTwo;
+		QTableWidgetItem* TableWidgetItemPropertyThree;
 		QLCDNumber* LCDNumberPropertyOne;
 		QLCDNumber* LCDNumberPropertyTwo;
 		QLCDNumber* LCDNumberPropertyThree;
 		QSpinBox* SpinBox;
 		QTableWidget* TableWidget;
 
-		TalentData(QString talentName = "", QString propertieOne = "", QString propertieTwo = "", QString propertieThree = "");
+		TalentGUI(QString talentName = "", QString propertieOne = "", QString propertieTwo = "", QString propertieThree = "");
 	};
-	struct TalentGroup
+	struct TalentGroupGUI
 	{
 		QString TalentGroupName;
-		std::vector<TalentData> Data;
+		std::vector<TalentGUI> Data;
 		QTableWidget* TableWidget;
 
-		TalentGroup(QString talentGroupName = "");
+		TalentGroupGUI(QString talentGroupName = "");
 	};
 
-	std::map<TalentGroupNames, TalentGroup> m_Talents;
+	std::map<TalentGroupNames, TalentGroupGUI> m_TalentGUI;
 	QVBoxLayout* m_Layout_Talents;
 	QHBoxLayout* m_Layout_TopRow;
 	QHBoxLayout* m_Layout_BottomRow;
@@ -61,7 +60,7 @@ private:
 	void initTalentGroup();
 	void setTalentData(TalentGroupNames talentGroupName);
 
-	void initLabel();
+	void initTableWidgetItem();
 	void initLCDNumber();
 	void initSpinbox();
 	void initTableTalentData();
@@ -71,8 +70,8 @@ private:
 	void setTableTalentData(QTableWidget* obj, int columns, int rows);
 	void setTableTalentGroup(QTableWidget *obj, QStringList header, int rows);
 
-	void checkPropertyType(QLabel* property, QLCDNumber* display, std::vector<int> values);
-	void addLabelToTalentDataTable(QTableWidget* obj, std::vector<QLabel*> label);
+	void checkPropertyType(QTableWidgetItem* property, QLCDNumber* display, std::vector<int> values);
+	void addLabelToTalentDataTable(QTableWidget* obj, std::vector<QTableWidgetItem*> label);
 	void addLCDNumberToTalentDataTable(QTableWidget* obj, std::vector<QLCDNumber*> lcdNumber);
 	void addSpinBoxToTalentDataTable(QTableWidget* obj, QSpinBox* spinBox);
 	void addTalentDataToTalentGroupTable(QTableWidget* obj, QTableWidget* talentData, int row);
