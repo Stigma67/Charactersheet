@@ -2,53 +2,58 @@
 #define SOCIALPLAYERDATA_HPP
 
 #include <QLabel>
-#include <QComboBox>
 #include <QTableWidget>
 #include <QHeaderView>
 #include <QLayout>
 #include <QFrame>
+#include "myQtObjects.hpp"
 
 class SocialPlayerData
 {
 private:
-	struct ComboBox
-	{
-		QComboBox* Titel = new QComboBox;
-		QComboBox* Profession = new QComboBox;
-		QComboBox* SocialStatus = new QComboBox;
-	} m_ComboBox;
+	struct ComboBox {
+		MyComboBox* Titel;
+		MyComboBox* Profession;
+		MyComboBox* SocialStatus;
 
-	struct Table
-	{
-		QTableWidget* Characteristics = new QTableWidget;
-		QTableWidget* OtherSpecifications = new QTableWidget;
-		QTableWidget* Advantages = new QTableWidget;
-		QTableWidget* Disadvantages = new QTableWidget;
-		QTableWidget* GenerallSpecialSkill = new QTableWidget;
-	} m_Table;
+		ComboBox();
+	};
+	struct Table {
+		QTableWidget* Characteristics;
+		QTableWidget* OtherSpecifications;
+		QTableWidget* Advantages;
+		QTableWidget* Disadvantages;
+		QTableWidget* GenerallSpecialSkill;
 
-	struct Layout
-	{
-		QHBoxLayout* hBox_Titel = new QHBoxLayout;
-		QHBoxLayout* hBox_Profession = new QHBoxLayout;
-		QHBoxLayout* hBox_SocialStatus = new QHBoxLayout;
-		QHBoxLayout* hBox_TopRow = new QHBoxLayout;
-		QHBoxLayout* hBox_BottomRow = new QHBoxLayout;
+		Table();
+	};
+	struct Layout {
+		QHBoxLayout* hBox_Titel;
+		QHBoxLayout* hBox_Profession;
+		QHBoxLayout* hBox_SocialStatus;
+		QHBoxLayout* hBox_TopRow;
+		QHBoxLayout* hBox_BottomRow;
 
-		QVBoxLayout* vBox_Social = new QVBoxLayout;
-		QVBoxLayout* vBox_SocialPlayerData = new QVBoxLayout;
-	} m_Layout;
+		QVBoxLayout* vBox_Social;
+		QVBoxLayout* vBox_SocialPlayerData;
 
-	struct Frame
-	{
-		QFrame* Titel = new QFrame;
-		QFrame* Profession = new QFrame;
-		QFrame* SocialStatus = new QFrame;
-		QFrame* Social = new QFrame;
-		QFrame* TopRow = new QFrame;
-		QFrame* BottomRow = new QFrame;
-		QFrame* SocialPlayerData = new QFrame;
-	} m_Frame;
+		Layout();
+	};
+	struct Frame {
+		QFrame* Titel;
+		QFrame* Profession;
+		QFrame* SocialStatus;
+		QFrame* Social;
+		QFrame* TopRow;
+		QFrame* BottomRow;
+		QFrame* SocialPlayerData;
+
+		Frame();
+	};
+	ComboBox m_ComboBox;
+	Table m_Table;
+	Layout m_Layout;
+	Frame m_Frame;
 
 	void initComboBox();
 	void initTable();
@@ -60,10 +65,10 @@ private:
 	void setTable(QTableWidget* obj, QStringList titel);
 	void setFont(QWidget *obj, int size);
 
+	void initGUI();
+
 public:
 	SocialPlayerData();
-
-	void initGUI();
 
 	QFrame* getFrameSocialPlayerData();
 };

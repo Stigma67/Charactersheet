@@ -11,56 +11,58 @@
 #include <QCheckBox>
 #include <QLayout>
 
-class Entity
+class EntityGUI
 {
 private:
-	struct Label
-	{
-		QLabel* Weight = new QLabel;
-		QLabel* Height = new QLabel;
-		QLabel* Health = new QLabel;
-		QLabel* Mana = new QLabel;
-	} m_Label;
+	struct Label {
+		QLabel* Weight;
+		QLabel* Height;
+		QLabel* Health;
+		QLabel* Mana;
 
-	struct DoubleSpinBox
-	{
-		QDoubleSpinBox* Weight = new QDoubleSpinBox;
-		QDoubleSpinBox* Height = new QDoubleSpinBox;
-	} m_DoubleSpinBox;
+		Label();
+	};
+	struct DoubleSpinBox {
+		QDoubleSpinBox* Weight;
+		QDoubleSpinBox* Height;
 
-	struct LCDNumber
-	{
-		QLCDNumber* Health = new QLCDNumber;
-		QLCDNumber* Mana = new QLCDNumber;
-	} m_LCDNumber;
+		DoubleSpinBox();
+	};
+	struct LCDNumber {
+		QLCDNumber* Health;
+		QLCDNumber* Mana;
 
-	QComboBox* m_ComboBox_Species = new QComboBox;
-	QCheckBox* m_CheckBox_Magical = new QCheckBox;
+		LCDNumber();
+	};
+	struct Layout {
+		QHBoxLayout* hBox_Weight;
+		QHBoxLayout* hBox_Height;
+		QHBoxLayout* hBox_Health;
+		QHBoxLayout* hBox_Mana;
+		QHBoxLayout* hBox_Entity;
 
-	struct Layout
-	{
-		QHBoxLayout* hBox_Weight = new QHBoxLayout;
-		QHBoxLayout* hBox_Height = new QHBoxLayout;
-		QHBoxLayout* hBox_Health = new QHBoxLayout;
-		QHBoxLayout* hBox_Mana = new QHBoxLayout;
-		QHBoxLayout* hBox_Entity = new QHBoxLayout;
+		QVBoxLayout* vBox_HealthAndMana;
 
-		QVBoxLayout* vBox_HealthAndMana = new QVBoxLayout;
-	} m_Layout;
-
+		Layout();
+	};
 	struct Frame
 	{
-		QFrame* Weight = new QFrame;
-		QFrame* Height = new QFrame;
-		QFrame* Health = new QFrame;
-		QFrame* Mana = new QFrame;
-		QFrame* HealthAndMana = new QFrame;
-		QFrame* Entity = new QFrame;
-	} m_Frame;
+		QFrame* Weight;
+		QFrame* Height;
+		QFrame* Health;
+		QFrame* Mana;
+		QFrame* HealthAndMana;
+		QFrame* Entity;
 
-	double m_Weight, m_Height, m_Health, m_Mana;
-	std::string m_Species;
-	bool m_Magical;
+		Frame();
+	};
+	Label m_Label;
+	DoubleSpinBox m_DoubleSpinBox;
+	LCDNumber m_LCDNumber;
+	Layout m_Layout;
+	Frame m_Frame;
+	QComboBox* m_ComboBox_Species;
+	QCheckBox* m_CheckBox_Magical;
 
 	void initLabel();
 	void initDoubleSpinBox();
@@ -69,16 +71,19 @@ private:
 	void initFrame();
 	void initGUI();
 
-	void setLabel(QLabel* obj, QString text);
+	void setLabel(QLabel* obj, QString text, int width, int height);
 	void setCheckbox(QCheckBox* obj);
 	void setComboBox(QComboBox* obj, std::vector<QString> items);
 
 	void setFont(QWidget *obj, int size);
 
 public:
-	Entity();
+	EntityGUI();
 
 	QFrame* getFrameEntity();
 };
 
+//double m_Weight, m_Height, m_Health, m_Mana;
+//std::string m_Species;
+//bool m_Magical;
 #endif // ENTITY_HPP

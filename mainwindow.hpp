@@ -10,6 +10,8 @@
 #include "basePlayerData.hpp"
 #include "socialPlayerData.hpp"
 #include "talents.hpp"
+#include "battleTechniques.hpp"
+#include "inventory.hpp"
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -18,50 +20,54 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 private:
-	struct Widget
-	{
-		QTabWidget* TabWidget_MainWidget = new QTabWidget;
-		QWidget* Widget_BaseData = new QWidget;
-		QWidget* Widget_Talents = new QWidget;
-		QWidget* Widget_FightTechniques = new QWidget;
-		QWidget* Widget_Inventory = new QWidget;
-	} m_Widget;
+	struct Widget {
+		QTabWidget* TabWidget_MainWidget;
+		QWidget* Widget_BaseData;
+		QWidget* Widget_Talents;
+		QWidget* Widget_BattleTechniques;
+		QWidget* Widget_Inventory;
 
-	struct Frame
-	{
-		QFrame* Frame_TalentsAndAP = new QFrame;
-		QFrame* Line_PropertiesAP = new QFrame;
-		QFrame* Line_Horizontal_BaseData01 = new QFrame;
-		QFrame* Line_Horizontal_baseData02 = new QFrame;
-		QFrame* Line_Talents01 = new QFrame;
-	} m_Frame;
+		Widget();
+	};
+	struct Frame {
+		QFrame* Frame_TalentsAndAP;
+		QFrame* Line_PropertiesAP;
+		QFrame* Line_Horizontal_BaseData01;
+		QFrame* Line_Horizontal_baseData02;
+		QFrame* Line_Talents01;
 
-	struct Layout
-	{
-		QHBoxLayout* hBox_TalentsAndAP = new QHBoxLayout;
+		Frame();
+	};
+	struct Layout {
+		QHBoxLayout* hBox_TalentsAndAP;
 
-		QVBoxLayout* vBox_BaseData = new QVBoxLayout;
-		QVBoxLayout* vBox_Talents = new QVBoxLayout;
-		QVBoxLayout* vBox_FightingTechniques = new QVBoxLayout;
-		QVBoxLayout* vBox_Inventory = new QVBoxLayout;
-	} m_Layout;
+		QVBoxLayout* vBox_BaseData;
+		QVBoxLayout* vBox_Talents;
+		QVBoxLayout* vBox_BattleTechniques;
+		QVBoxLayout* vBox_Inventory;
 
-	Entity m_Entity;
+		Layout();
+	};
+	Widget m_Widget;
+	Frame m_Frame;
+	Layout m_Layout;
+
+	EntityGUI m_Entity;
 	Properties m_Properties;
-	AdventurePoints m_AdventurePoints;
-	BasePlayerData m_BasePlayerData;
+	AdventurePointsGUI m_AdventurePoints;
+	BasePlayerDataGUI m_BasePlayerData;
 	SocialPlayerData m_SocialPlayerData;
-	Talents m_Talents;
+	TalentsGUI m_Talents;
+	BattleTechniquesGUI m_BattleTechniques;
+	InventoryGUI m_InventoryGUI;
 
-	void combinePropertiesAndAP(Properties m_Properties, AdventurePoints m_AdventurePoints);
+	void combinePropertiesAndAP(Properties m_Properties, AdventurePointsGUI m_AdventurePoints);
 
 public:
-	MainWindow(QWidget* parent = nullptr, Entity entity = Entity(), Properties talents = Properties(),
-	AdventurePoints adventurePoints = AdventurePoints(), BasePlayerData basePlayerData = BasePlayerData(),
-	SocialPlayerData socialPlayerData = SocialPlayerData());
+	MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
 
-//private slots:
-//	void addBasePlayerData();
+	//private slots:
+	//	void addBasePlayerData();
 };
 #endif // MAINWINDOW_H

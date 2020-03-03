@@ -1,7 +1,7 @@
 #include "talents.hpp"
 #include <QDebug>
 
-Talents::Talents()
+TalentsGUI::TalentsGUI()
 : m_Layout_Talents(new QVBoxLayout)
 , m_Layout_TopRow(new QHBoxLayout)
 , m_Layout_BottomRow(new QHBoxLayout)
@@ -12,35 +12,33 @@ Talents::Talents()
 	initGUI();
 }
 
-//	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>GUI>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Talents::TalentGroupGUI::TalentGroupGUI(QString talentGroupName)
+TalentsGUI::TalentGroup::TalentGroup(QString talentGroupName)
 : TalentGroupName(talentGroupName)
 , TableWidget(new QTableWidget)
 {}
-Talents::TalentGUI::TalentGUI(QString talentName, QString propertieOne, QString propertieTwo, QString propertieThree)
+TalentsGUI::Talent::Talent(QString talentName, QString propertieOne, QString propertieTwo, QString propertieThree)
 : NameTalent(talentName)
 , NamePropertyOne(propertieOne)
 , NamePropertyTwo(propertieTwo)
 , NamePropertyThree(propertieThree)
-, TableWidgetItemTalent(new QTableWidgetItem)
-, TableWidgetItemPropertyOne(new QTableWidgetItem)
-, TableWidgetItemPropertyTwo(new QTableWidgetItem)
-, TableWidgetItemPropertyThree(new QTableWidgetItem)
+, LabelTalent(new QLabel)
+, LabelPropertyOne(new QLabel)
+, LabelPropertyTwo(new QLabel)
+, LabelPropertyThree(new QLabel)
 , LCDNumberPropertyOne(new QLCDNumber)
 , LCDNumberPropertyTwo(new QLCDNumber)
 , LCDNumberPropertyThree(new QLCDNumber)
-, SpinBox(new QSpinBox)
+, SpinBox(new MySpinBox)
 , TableWidget(new QTableWidget)
 {}
 
-void Talents::initTalentGroup()
-{
-	m_TalentGUI.insert(std::make_pair(GESELLSCHAFTSTALENTE, TalentGroupGUI("Gesellschaftstalente")));
-	m_TalentGUI.insert(std::make_pair(HANDWERKSTALENTE, TalentGroupGUI("Handwerkstalente")));
-	m_TalentGUI.insert(std::make_pair(KOERPERTALENTE, TalentGroupGUI("Körpertalente")));
-	m_TalentGUI.insert(std::make_pair(KRIEGSKUNSTTALENTE, TalentGroupGUI("Kriegskunsttalente")));
-	m_TalentGUI.insert(std::make_pair(NATURTALENTE, TalentGroupGUI("Naturtalente")));
-	m_TalentGUI.insert(std::make_pair(WISSENSTALENTE, TalentGroupGUI("Wissenstalente")));
+void TalentsGUI::initTalentGroup() {
+	m_TalentGUI.insert(std::make_pair(GESELLSCHAFTSTALENTE, TalentGroup("Gesellschaftstalente")));
+	m_TalentGUI.insert(std::make_pair(HANDWERKSTALENTE, TalentGroup("Handwerkstalente")));
+	m_TalentGUI.insert(std::make_pair(KOERPERTALENTE, TalentGroup("Körpertalente")));
+	m_TalentGUI.insert(std::make_pair(KRIEGSKUNSTTALENTE, TalentGroup("Kriegskunsttalente")));
+	m_TalentGUI.insert(std::make_pair(NATURTALENTE, TalentGroup("Naturtalente")));
+	m_TalentGUI.insert(std::make_pair(WISSENSTALENTE, TalentGroup("Wissenstalente")));
 
 	setTalentData(GESELLSCHAFTSTALENTE);
 	setTalentData(HANDWERKSTALENTE);
@@ -49,43 +47,40 @@ void Talents::initTalentGroup()
 	setTalentData(NATURTALENTE);
 	setTalentData(WISSENSTALENTE);
 }
-void Talents::initTableWidgetItem()
-{
+void TalentsGUI::initLabel() {
 	for(auto& varOne : m_TalentGUI)
 	{
-		for(TalentGUI& talentData : varOne.second.Data)
+		for(Talent& talentData : varOne.second.Data)
 		{
-			talentData.TableWidgetItemTalent->setText(talentData.NameTalent);
-			talentData.TableWidgetItemPropertyOne->setText(talentData.NamePropertyOne);
-			talentData.TableWidgetItemPropertyTwo->setText(talentData.NamePropertyTwo);
-			talentData.TableWidgetItemPropertyThree->setText(talentData.NamePropertyThree);
+			talentData.LabelTalent->setText(talentData.NameTalent);
+			talentData.LabelPropertyOne->setText(talentData.NamePropertyOne);
+			talentData.LabelPropertyTwo->setText(talentData.NamePropertyTwo);
+			talentData.LabelPropertyThree->setText(talentData.NamePropertyThree);
 
-			talentData.TableWidgetItemTalent->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-			talentData.TableWidgetItemPropertyOne->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-			talentData.TableWidgetItemPropertyTwo->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-			talentData.TableWidgetItemPropertyThree->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+			talentData.LabelTalent->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+			talentData.LabelPropertyOne->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+			talentData.LabelPropertyTwo->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+			talentData.LabelPropertyThree->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 		}
 	}
 }
-void Talents::initSpinbox()
-{
+void TalentsGUI::initSpinbox() {
 	for(auto varOne : m_TalentGUI) {
-		for(TalentGUI& talentData : varOne.second.Data) {
+		for(Talent& talentData : varOne.second.Data) {
 			talentData.SpinBox->setRange(0, 99);
 			talentData.SpinBox->setFocusPolicy(Qt::StrongFocus);
 			talentData.SpinBox->setFont(QFont("Times New Roman", 16, QFont::Bold));
 		}
 	}
 }
-void Talents::initTableTalentData()
-{
+void TalentsGUI::initTableTalentData() {
 	for(auto& varOne : m_TalentGUI)
 	{
-		for (TalentGUI& talentData : varOne.second.Data) {
+		for (Talent& talentData : varOne.second.Data) {
 			setTableTalentData(talentData.TableWidget, 5, 2);
 
-			addLabelToTalentDataTable(talentData.TableWidget, {talentData.TableWidgetItemTalent, talentData.TableWidgetItemPropertyOne,
-			talentData.TableWidgetItemPropertyTwo, talentData.TableWidgetItemPropertyThree});
+			addLabelToTalentDataTable(talentData.TableWidget, {talentData.LabelTalent, talentData.LabelPropertyOne,
+			talentData.LabelPropertyTwo, talentData.LabelPropertyThree});
 
 			addLCDNumberToTalentDataTable(talentData.TableWidget, {talentData.LCDNumberPropertyOne,
 			talentData.LCDNumberPropertyTwo, talentData.LCDNumberPropertyThree});
@@ -95,23 +90,21 @@ void Talents::initTableTalentData()
 		}
 	}
 }
-void Talents::initTableTalentGroup()
-{
+void TalentsGUI::initTableTalentGroup() {
 	int row = 0;
 
 	for (auto varOne : m_TalentGUI) {
 		setTableTalentGroup(varOne.second.TableWidget, {varOne.second.TalentGroupName}, varOne.second.Data.size());
-		for (TalentGUI& talentData : varOne.second.Data) {
+		for (Talent& talentData : varOne.second.Data) {
 			addTalentDataToTalentGroupTable(varOne.second.TableWidget, talentData.TableWidget, row);
 			++row;
 		}
 		row = 0;
 	}
 }
-void Talents::initGUI()
-{
+void TalentsGUI::initGUI() {
 	initTalentGroup();
-	initTableWidgetItem();
+	initLabel();
 	initSpinbox();
 	initTableTalentData();
 	initTableTalentGroup();
@@ -131,96 +124,86 @@ void Talents::initGUI()
 	m_Frame_Talents->setLayout(m_Layout_Talents);
 }
 
-void Talents::setTalentData(TalentGroupNames talentGroupName)
-{
-	switch (talentGroupName)
-	{
-		case GESELLSCHAFTSTALENTE:
-		{
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Betören", "MU", "CH", "SE"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Diplomatie", "CH", "KL", "SE"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Einschüchtern", "MU", "IN", "KK"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Etikette", "KL", "IN", "CH"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Gassenwissen", "KL", "IN", "CH"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Handeln", "CH", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Menschenkenntnis", "KL", "IN", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Singen", "CH", "KL", "KO"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Überreden", "CH", "KL", "IN"));
+void TalentsGUI::setTalentData(TalentGroupNames talentGroupName) {
+	switch (talentGroupName) {
+		case GESELLSCHAFTSTALENTE: {
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Betören", "MU", "CH", "SE"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Diplomatie", "CH", "KL", "SE"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Einschüchtern", "MU", "IN", "KK"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Etikette", "KL", "IN", "CH"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Gassenwissen", "KL", "IN", "CH"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Handeln", "CH", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Menschenkenntnis", "KL", "IN", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Singen", "CH", "KL", "KO"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Überreden", "CH", "KL", "IN"));
 			break;
 		}
-		case HANDWERKSTALENTE:
-		{
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Heilkunde Handwerk", "KL", "GE", "MU"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Holzbearbeitung", "GE", "KK", "GE"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Kochen", "IN", "GE", "KL"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Lederbearbeitung", "GE", "IN", "GE"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Malen & Zeichnen", "IN", "GE", "KL"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Mechanik", "KL", "GE", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Metallbearbeitung", "GE", "KO", "KK"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Musizieren", "CH", "GE", "KL"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Steinbearbeitung", "GE", "GE", "KK"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Stoffbearbeitung", "GE", "IN", "KL"));
+		case HANDWERKSTALENTE: {
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Heilkunde Handwerk", "KL", "GE", "MU"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Holzbearbeitung", "GE", "KK", "GE"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Kochen", "IN", "GE", "KL"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Lederbearbeitung", "GE", "IN", "GE"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Malen & Zeichnen", "IN", "GE", "KL"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Mechanik", "KL", "GE", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Metallbearbeitung", "GE", "KO", "KK"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Musizieren", "CH", "GE", "KL"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Steinbearbeitung", "GE", "GE", "KK"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Stoffbearbeitung", "GE", "IN", "KL"));
 			break;
 		}
-		case KOERPERTALENTE:
-		{
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Fesseln", "KL", "GE", "KK"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Fliegen", "MU", "IN", "GE"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Gaukeleien", "GE", "CH", "KO"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Klettern", "KK", "KO", "MU"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Körperbeherrschung", "GE", "KO", "KK"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Kraftakt", "KK", "KO", "KK"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Reiten", "GE", "KO", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Schwimmen", "KO", "MU", "GE"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Taschendiebstahl", "MU", "GE", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Zechen", "SE", "KO", "KL"));
+		case KOERPERTALENTE: {
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Fesseln", "KL", "GE", "KK"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Fliegen", "MU", "IN", "GE"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Gaukeleien", "GE", "CH", "KO"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Klettern", "KK", "KO", "MU"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Körperbeherrschung", "GE", "KO", "KK"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Kraftakt", "KK", "KO", "KK"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Reiten", "GE", "KO", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Schwimmen", "KO", "MU", "GE"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Taschendiebstahl", "MU", "GE", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Zechen", "SE", "KO", "KL"));
 			break;
 		}
-		case KRIEGSKUNSTTALENTE:
-		{
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Ausbildung", "KL", "CH", "SE"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Belagern", "KL", "IN", "MU"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Fernkämpfer führen", "MU", "IN", "CH"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("GeoStrategien", "KL", "IN", "MU"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Infanterie führen", "MU", "IN", "CH"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Kavalerie führen", "MU", "IN", "CH"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Logistik", "KL", "IN", "KL"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Waffenkunde", "KL", "KL", "IN"));
+		case KRIEGSKUNSTTALENTE: {
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Ausbildung", "KL", "CH", "SE"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Belagern", "KL", "IN", "MU"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Fernkämpfer führen", "MU", "IN", "CH"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("GeoStrategien", "KL", "IN", "MU"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Infanterie führen", "MU", "IN", "CH"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Kavalerie führen", "MU", "IN", "CH"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Logistik", "KL", "IN", "KL"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Waffenkunde", "KL", "KL", "IN"));
 			break;
 		}
-		case NATURTALENTE:
-		{
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Fährtensuche", "IN", "KL", "SE"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Fallenstellen", "GE", "IN", "KK"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Fischen", "SE", "GE", "KL"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Jagdstrategien", "KL", "IN", "MU"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Orientiereung", "IN", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Verstohlenheit", "KL", "IN", "GE"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Wildnisleben", "IN", "KL", "MU"));
+		case NATURTALENTE: {
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Fährtensuche", "IN", "KL", "SE"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Fallenstellen", "GE", "IN", "KK"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Fischen", "SE", "GE", "KL"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Jagdstrategien", "KL", "IN", "MU"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Orientiereung", "IN", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Verstohlenheit", "KL", "IN", "GE"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Wildnisleben", "IN", "KL", "MU"));
 			break;
 		}
-		case WISSENSTALENTE:
-		{
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Dynastiekunde", "KL", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Flora & Fauna", "KL", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Geographie", "KL", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Geschichtswissen", "KL", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Götter & Kulte", "KL", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Heilkundewissen", "KL", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Legenden", "KL", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Magiekunde", "KL", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Rechtskunde", "KL", "KL", "IN"));
-			m_TalentGUI.at(talentGroupName).Data.push_back(TalentGUI("Sternenkunde", "KL", "KL", "IN"));
+		case WISSENSTALENTE: {
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Dynastiekunde", "KL", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Flora & Fauna", "KL", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Geographie", "KL", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Geschichtswissen", "KL", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Götter & Kulte", "KL", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Heilkundewissen", "KL", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Legenden", "KL", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Magiekunde", "KL", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Rechtskunde", "KL", "KL", "IN"));
+			m_TalentGUI.at(talentGroupName).Data.push_back(Talent("Sternenkunde", "KL", "KL", "IN"));
 			break;
 		}
-		default:
-		{
+		default: {
 			break;
 		}
 	}
 }
-void Talents::setTableTalentData(QTableWidget* obj, int columns, int rows)
-{
+void TalentsGUI::setTableTalentData(QTableWidget* obj, int columns, int rows) {
 	obj->verticalHeader()->setVisible(false);
 	obj->horizontalHeader()->setVisible(false);
 	obj->setColumnCount(columns);
@@ -246,8 +229,7 @@ void Talents::setTableTalentData(QTableWidget* obj, int columns, int rows)
 	obj->setSelectionMode(QTableWidget::NoSelection);
 	obj->setFocusPolicy(Qt::NoFocus);
 }
-void Talents::setTableTalentGroup(QTableWidget* obj, QStringList header, int rows)
-{
+void TalentsGUI::setTableTalentGroup(QTableWidget* obj, QStringList header, int rows) {
 	obj->verticalHeader()->setVisible(false);
 	obj->setColumnCount(1);
 	obj->setRowCount(rows);
@@ -263,19 +245,17 @@ void Talents::setTableTalentGroup(QTableWidget* obj, QStringList header, int row
 	obj->setFont(QFont("Times New Roman", 12, QFont::Bold));
 
 }
-void Talents::setPropertyValues(int ch, int ge, int in, int kk, int kl, int ko, int mu, int se)
-{
+void TalentsGUI::setPropertyValues(int ch, int ge, int in, int kk, int kl, int ko, int mu, int se) {
 	for (auto var : m_TalentGUI) {
-		for (TalentGUI talentData : var.second.Data) {
-			checkPropertyType(talentData.TableWidgetItemPropertyOne, talentData.LCDNumberPropertyOne, {ch, ge, in, kk, kl, ko, mu, se});
-			checkPropertyType(talentData.TableWidgetItemPropertyTwo, talentData.LCDNumberPropertyTwo, {ch, ge, in, kk, kl, ko, mu, se});
-			checkPropertyType(talentData.TableWidgetItemPropertyThree, talentData.LCDNumberPropertyThree, {ch, ge, in, kk, kl, ko, mu, se});
+		for (Talent talentData : var.second.Data) {
+			checkPropertyType(talentData.LabelPropertyOne, talentData.LCDNumberPropertyOne, {ch, ge, in, kk, kl, ko, mu, se});
+			checkPropertyType(talentData.LabelPropertyTwo, talentData.LCDNumberPropertyTwo, {ch, ge, in, kk, kl, ko, mu, se});
+			checkPropertyType(talentData.LabelPropertyThree, talentData.LCDNumberPropertyThree, {ch, ge, in, kk, kl, ko, mu, se});
 		}
 	}
 }
 
-void Talents::checkPropertyType(QTableWidgetItem* property, QLCDNumber* display, std::vector<int> values)
-{
+void TalentsGUI::checkPropertyType(QLabel* property, QLCDNumber* display, std::vector<int> values) {
 	if(property->text() == "CH") {
 		display->setDigitCount(values.at(0));
 	}
@@ -301,16 +281,14 @@ void Talents::checkPropertyType(QTableWidgetItem* property, QLCDNumber* display,
 		display->setDigitCount(values.at(7));
 	}
 }
-void Talents::addLabelToTalentDataTable(QTableWidget* obj, std::vector<QTableWidgetItem*> label)
-{
+void TalentsGUI::addLabelToTalentDataTable(QTableWidget* obj, std::vector<QLabel*> label) {
 	if(obj->columnCount()-1 == (int)label.size()) {
 		for (int var = 0; var < obj->columnCount()-1; ++var) {
-			obj->setItem(0, var, label.at(var));
+			obj->setCellWidget(0, var, label.at(var));
 		}
 	}
 }
-void Talents::addLCDNumberToTalentDataTable(QTableWidget* obj, std::vector<QLCDNumber*> lcdNumber)
-{
+void TalentsGUI::addLCDNumberToTalentDataTable(QTableWidget* obj, std::vector<QLCDNumber*> lcdNumber) {
 	if(obj->columnCount()-2 == (int)lcdNumber.size()) {
 		for (int var = 0; var < (int)lcdNumber.size(); ++var) {
 			lcdNumber.at(var)->setDigitCount(2);
@@ -319,24 +297,19 @@ void Talents::addLCDNumberToTalentDataTable(QTableWidget* obj, std::vector<QLCDN
 		}
 	}
 }
-void Talents::addSpinBoxToTalentDataTable(QTableWidget* obj, QSpinBox* spinBox)
-{
+void TalentsGUI::addSpinBoxToTalentDataTable(QTableWidget* obj, QSpinBox* spinBox) {
 	obj->setCellWidget(0, obj->columnCount()-1, spinBox);
 }
-void Talents::addTalentDataToTalentGroupTable(QTableWidget* obj, QTableWidget* talentData, int row)
-{
+void TalentsGUI::addTalentDataToTalentGroupTable(QTableWidget* obj, QTableWidget* talentData, int row) {
 	if(row <= obj->rowCount()) {
 		obj->setCellWidget(row, 0, talentData);
 	}
 }
-void Talents::mergeTalentDataTableCells(QTableWidget *obj)
-{
+void TalentsGUI::mergeTalentDataTableCells(QTableWidget *obj) {
 	obj->setSpan(0, 0, 2, 1);
 	obj->setSpan(0, obj->columnCount()-1, 2, 1);
 }
 
-QFrame* Talents::getFrame() const
-{
+QFrame* TalentsGUI::getFrame() const {
 	return m_Frame_Talents;
 }
-//	<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GUI<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

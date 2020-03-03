@@ -3,82 +3,94 @@
 
 #include <QLabel>
 #include <QLineEdit>
-#include <QComboBox>
-#include <QSpinBox>
 #include <QLayout>
 #include <QDateTimeEdit>
+#include "myQtObjects.hpp"
 
-class BasePlayerData
+enum TalentGroupNames
 {
+	GESELLSCHAFTSTALENTE = 0,
+	HANDWERKSTALENTE,
+	KOERPERTALENTE,
+	KRIEGSKUNSTTALENTE,
+	NATURTALENTE,
+	WISSENSTALENTE
+};
+class BasePlayerDataGUI {
 private:
-	struct Label
-	{
-		QLabel* Birthday = new QLabel;
-		QLabel* Birthplace = new QLabel;
-		QLabel* Age = new QLabel;
-		QLabel* Gender = new QLabel;
-		QLabel* Culture = new QLabel;
-	} m_Label;
+	struct Label {
+		QLabel* Birthday;
+		QLabel* Birthplace;
+		QLabel* Age;
+		QLabel* Gender;
+		QLabel* Culture;
 
-	struct LineEdit
-	{
-		QLineEdit* Player = new QLineEdit;
-		QLineEdit* Forename = new QLineEdit;
-		QLineEdit* Surname = new QLineEdit;
-		QLineEdit* Eyecolor = new QLineEdit;
-		QLineEdit* Haircolor = new QLineEdit;
-	} m_LineEdit;
+		Label();
+	};
+	struct LineEdit {
+		QLineEdit* Player;
+		QLineEdit* Forename;
+		QLineEdit* Surname;
+		QLineEdit* Eyecolor;
+		QLineEdit* Haircolor;
 
-	struct ComboBox
-	{
-		QComboBox* CultureMainGoup = new QComboBox;
-		QComboBox* CultureSubGoup = new QComboBox;
-		QComboBox* BirthplaceCity = new QComboBox;
-		QComboBox* BirthplaceRegion = new QComboBox;
-		QComboBox* BirthplaceCountry = new QComboBox;
-		QComboBox* Gender = new QComboBox;
-	} m_ComboBox;
+		LineEdit();
+	};
+	struct ComboBox {
+		MyComboBox* CultureMainGoup;
+		MyComboBox* CultureSubGoup;
+		MyComboBox* BirthplaceCity;
+		MyComboBox* BirthplaceRegion;
+		MyComboBox* BirthplaceCountry;
+		MyComboBox* Gender;
 
-	struct Layout
-	{
-		QHBoxLayout* hBox_TopRow = new QHBoxLayout;
-		QHBoxLayout* hBox_BottomRow = new QHBoxLayout;
-		QHBoxLayout* hBox_Birthday = new QHBoxLayout;
-		QHBoxLayout* hBox_Age = new QHBoxLayout;
-		QHBoxLayout* hBox_Gender = new QHBoxLayout;
+		ComboBox();
+	};
+	struct Layout {
+		QHBoxLayout* hBox_TopRow;
+		QHBoxLayout* hBox_BottomRow;
+		QHBoxLayout* hBox_Birthday;
+		QHBoxLayout* hBox_Age;
+		QHBoxLayout* hBox_Gender;
 
-		QVBoxLayout* vBox_BasePlayerData = new QVBoxLayout;
-		QVBoxLayout* vBox_Name = new QVBoxLayout;
-		QVBoxLayout* vBox_Birthplace = new QVBoxLayout;
-		QVBoxLayout* vBox_BirthplaceComboBox = new QVBoxLayout;
-		QVBoxLayout* vBox_AgeAndGender = new QVBoxLayout;
-		QVBoxLayout* vBox_EyeAndHairColor = new QVBoxLayout;
-		QVBoxLayout* vBox_Culture = new QVBoxLayout;
-	} m_Layout;
+		QVBoxLayout* vBox_BasePlayerData;
+		QVBoxLayout* vBox_Name;
+		QVBoxLayout* vBox_Birthplace;
+		QVBoxLayout* vBox_BirthplaceComboBox;
+		QVBoxLayout* vBox_AgeAndGender;
+		QVBoxLayout* vBox_EyeAndHairColor;
+		QVBoxLayout* vBox_Culture;
 
-	struct Frame
-	{
-		QFrame* BasePlayerData = new QFrame;
+		Layout();
+	};
+	struct Frame {
+		QFrame* BasePlayerData;
 
-		QFrame* TopRow = new QFrame;
-		QFrame* Name = new QFrame;
-		QFrame* EyeAndHairColor = new QFrame;
+		QFrame* TopRow;
+		QFrame* Name;
+		QFrame* EyeAndHairColor;
 
-		QFrame* BottomRow = new QFrame;
-		QFrame* Birthplace = new QFrame;
-		QFrame* BirthplaceComboBox = new QFrame;
-		QFrame* Birthday = new QFrame;
-		QFrame* Culture = new QFrame;
+		QFrame* BottomRow;
+		QFrame* Birthplace;
+		QFrame* BirthplaceComboBox;
+		QFrame* Birthday;
+		QFrame* Culture;
 
-		QFrame* AgeAndGender = new QFrame;
-		QFrame* Age = new QFrame;
-		QFrame* Gender = new QFrame;
+		QFrame* AgeAndGender;
+		QFrame* Age;
+		QFrame* Gender;
 
-		QFrame* Line_Horizontal01 = new QFrame;
-	} m_Frame;
+		QFrame* Line_Horizontal01;
 
-	QSpinBox* m_SpinBox_Age = new QSpinBox;
-	QDateTimeEdit* m_DateTimeEdit_Birthday = new QDateTimeEdit;
+		Frame();
+	};
+	Label m_Label;
+	LineEdit m_LineEdit;
+	ComboBox m_ComboBox;
+	Layout m_Layout;
+	Frame m_Frame;
+	QSpinBox* m_SpinBox_Age;
+	QDateTimeEdit* m_DateTimeEdit_Birthday;
 
 	void initLabel();
 	void initLineEdit();
@@ -93,11 +105,10 @@ private:
 	void setFrame(QFrame* obj, int size);
 	void setFont(QWidget* obj, int size);
 
-public:
-	BasePlayerData();
-
 	void initGUI();
 
+public:
+	BasePlayerDataGUI();
 	QFrame* getFrameBasePlayerData();
 };
 

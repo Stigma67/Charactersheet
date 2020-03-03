@@ -1,31 +1,84 @@
 #include "basePlayerData.hpp"
 #include <QDebug>
 
-BasePlayerData::BasePlayerData()
+BasePlayerDataGUI::BasePlayerDataGUI()
+: m_Label(Label())
+, m_LineEdit(LineEdit())
+, m_ComboBox(ComboBox())
+, m_Layout(Layout())
+, m_Frame(Frame())
+, m_SpinBox_Age(new QSpinBox)
+, m_DateTimeEdit_Birthday(new QDateTimeEdit)
 {
 	initGUI();
 }
+BasePlayerDataGUI::Label::Label()
+: Birthday(new QLabel)
+, Birthplace(new QLabel)
+, Age(new QLabel)
+, Gender(new QLabel)
+, Culture(new QLabel)
+{}
+BasePlayerDataGUI::LineEdit::LineEdit()
+: Player(new QLineEdit)
+, Forename(new QLineEdit)
+, Surname(new QLineEdit)
+, Eyecolor(new QLineEdit)
+, Haircolor(new QLineEdit)
+{}
+BasePlayerDataGUI::ComboBox::ComboBox()
+: CultureMainGoup(new MyComboBox)
+, CultureSubGoup(new MyComboBox)
+, BirthplaceCity(new MyComboBox)
+, BirthplaceRegion(new MyComboBox)
+, BirthplaceCountry(new MyComboBox)
+, Gender(new MyComboBox)
+{}
+BasePlayerDataGUI::Layout::Layout()
+: hBox_TopRow(new QHBoxLayout)
+, hBox_BottomRow(new QHBoxLayout)
+, hBox_Birthday(new QHBoxLayout)
+, hBox_Age(new QHBoxLayout)
+, hBox_Gender(new QHBoxLayout)
+, vBox_BasePlayerData(new QVBoxLayout)
+, vBox_Name(new QVBoxLayout)
+, vBox_Birthplace(new QVBoxLayout)
+, vBox_BirthplaceComboBox(new QVBoxLayout)
+, vBox_AgeAndGender(new QVBoxLayout)
+, vBox_EyeAndHairColor(new QVBoxLayout)
+, vBox_Culture(new QVBoxLayout)
+{}
+BasePlayerDataGUI::Frame::Frame()
+: BasePlayerData(new QFrame)
+, TopRow(new QFrame)
+, Name(new QFrame)
+, EyeAndHairColor(new QFrame)
+, BottomRow(new QFrame)
+, Birthplace(new QFrame)
+, BirthplaceComboBox(new QFrame)
+, Birthday(new QFrame)
+, Culture(new QFrame)
+, AgeAndGender(new QFrame)
+, Age(new QFrame)
+, Gender(new QFrame)
+, Line_Horizontal01(new QFrame)
+{}
 
-void BasePlayerData::initLineEdit()
-{
+void BasePlayerDataGUI::initLineEdit() {
 	setLineEdit(m_LineEdit.Player, "Spielernamen eingeben");
 	setLineEdit(m_LineEdit.Forename, "Vornamen eingeben");
 	setLineEdit(m_LineEdit.Surname, "Nachnamen eingeben");
 	setLineEdit(m_LineEdit.Eyecolor, "Augenfarbe eingeben");
 	setLineEdit(m_LineEdit.Haircolor, "Haarfarbe eingeben");
 }
-
-void BasePlayerData::initLabel()
-{
+void BasePlayerDataGUI::initLabel() {
 	setLabel(m_Label.Culture, "Kultur:");
 	setLabel(m_Label.Birthplace, "Geburtsort:");
 	setLabel(m_Label.Birthday, "Geburtstag:");
 	setLabel(m_Label.Gender, "Geschlecht:");
 	setLabel(m_Label.Age, "Alter:");
 }
-
-void BasePlayerData::initComboBox()
-{
+void BasePlayerDataGUI::initComboBox() {
 	setComboBox(m_ComboBox.CultureMainGoup, {"Hauptgruppe", "Drakonisch", "Zwergisch", "Elfisch"}, false);
 	setComboBox(m_ComboBox.CultureSubGoup, {"Hauptgruppe Auswählen!!!"}, true);
 	setComboBox(m_ComboBox.BirthplaceCity, {"TODO Stadt"}, true);
@@ -33,9 +86,7 @@ void BasePlayerData::initComboBox()
 	setComboBox(m_ComboBox.BirthplaceCountry, {"TODO Land"}, true);
 	setComboBox(m_ComboBox.Gender, {"Geschlecht", "Männlich", "Weiblich", "Divers"}, false);
 }
-
-void BasePlayerData::initLayout()
-{
+void BasePlayerDataGUI::initLayout() {
 	m_Layout.vBox_Name->addWidget(m_LineEdit.Forename);
 	m_Layout.vBox_Name->addWidget(m_LineEdit.Surname);
 
@@ -75,9 +126,7 @@ void BasePlayerData::initLayout()
 	m_Layout.vBox_BasePlayerData->addWidget(m_Frame.Line_Horizontal01);
 	m_Layout.vBox_BasePlayerData->addWidget(m_Frame.BottomRow);
 }
-
-void BasePlayerData::initFrame()
-{
+void BasePlayerDataGUI::initFrame() {
 	m_Frame.Line_Horizontal01->setFrameStyle(QFrame::HLine | QFrame::Plain);
 	m_Frame.Line_Horizontal01->setLineWidth(3);
 
@@ -99,9 +148,7 @@ void BasePlayerData::initFrame()
 
 	m_Frame.BasePlayerData->setLayout(m_Layout.vBox_BasePlayerData);
 }
-
-void BasePlayerData::initGUI()
-{
+void BasePlayerDataGUI::initGUI() {
 	initLabel();
 	initLineEdit();
 	initComboBox();
@@ -119,16 +166,13 @@ void BasePlayerData::initGUI()
 	initFrame();
 }
 
-void BasePlayerData::setLabel(QLabel* obj, QString text)
-{
+void BasePlayerDataGUI::setLabel(QLabel* obj, QString text) {
 	obj->setText(text);
 	setFont(obj, 16);
 	obj->setAlignment(Qt::AlignLeft);
 	obj->setFixedSize(QSize(106, 20));
 }
-
-void BasePlayerData::setLineEdit(QLineEdit* obj, QString text)
-{
+void BasePlayerDataGUI::setLineEdit(QLineEdit* obj, QString text) {
 	if(text == "Spielernamen eingeben")
 	{
 		obj->setPlaceholderText(text);
@@ -141,9 +185,7 @@ void BasePlayerData::setLineEdit(QLineEdit* obj, QString text)
 		obj->setFixedSize(QSize(300, 30));
 	}
 }
-
-void BasePlayerData::setComboBox(QComboBox* obj, std::vector<QString> items, bool isDisabled)
-{
+void BasePlayerDataGUI::setComboBox(QComboBox* obj, std::vector<QString> items, bool isDisabled) {
 	for (QString var : items)
 	{
 		obj->addItem(var);
@@ -161,13 +203,10 @@ void BasePlayerData::setComboBox(QComboBox* obj, std::vector<QString> items, boo
 		obj->setDisabled(isDisabled);
 	}
 }
-
-void BasePlayerData::setFont(QWidget *obj, int size)
-{
+void BasePlayerDataGUI::setFont(QWidget *obj, int size) {
 	obj->setFont(QFont("Times New Roman", size, QFont::Bold));
 }
 
-QFrame* BasePlayerData::getFrameBasePlayerData()
-{
+QFrame* BasePlayerDataGUI::getFrameBasePlayerData() {
 	return m_Frame.BasePlayerData;
 }

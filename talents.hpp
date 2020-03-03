@@ -9,12 +9,10 @@
 #include <QLayout>
 #include <QFrame>
 
-class Talents
+class TalentsGUI
 {
 private:
-	//	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>GUI>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	enum TalentGroupNames
-	{
+	enum TalentGroupNames {
 		GESELLSCHAFTSTALENTE = 0,
 		HANDWERKSTALENTE,
 		KOERPERTALENTE,
@@ -22,34 +20,32 @@ private:
 		NATURTALENTE,
 		WISSENSTALENTE
 	};
-	struct TalentGUI
-	{
+
+	struct Talent {
 		QString NameTalent;
 		QString NamePropertyOne;
 		QString NamePropertyTwo;
 		QString NamePropertyThree;
-		QTableWidgetItem* TableWidgetItemTalent;
-		QTableWidgetItem* TableWidgetItemPropertyOne;
-		QTableWidgetItem* TableWidgetItemPropertyTwo;
-		QTableWidgetItem* TableWidgetItemPropertyThree;
+		QLabel* LabelTalent;
+		QLabel* LabelPropertyOne;
+		QLabel* LabelPropertyTwo;
+		QLabel* LabelPropertyThree;
 		QLCDNumber* LCDNumberPropertyOne;
 		QLCDNumber* LCDNumberPropertyTwo;
 		QLCDNumber* LCDNumberPropertyThree;
-		QSpinBox* SpinBox;
+		MySpinBox* SpinBox;
 		QTableWidget* TableWidget;
 
-		TalentGUI(QString talentName = "", QString propertieOne = "", QString propertieTwo = "", QString propertieThree = "");
+		Talent(QString talentName = "", QString propertieOne = "", QString propertieTwo = "", QString propertieThree = "");
 	};
-	struct TalentGroupGUI
-	{
+	struct TalentGroup {
 		QString TalentGroupName;
-		std::vector<TalentGUI> Data;
+		std::vector<Talent> Data;
 		QTableWidget* TableWidget;
 
-		TalentGroupGUI(QString talentGroupName = "");
+		TalentGroup(QString talentGroupName = "");
 	};
-
-	std::map<TalentGroupNames, TalentGroupGUI> m_TalentGUI;
+	std::map<TalentGroupNames, TalentGroup> m_TalentGUI;
 	QVBoxLayout* m_Layout_Talents;
 	QHBoxLayout* m_Layout_TopRow;
 	QHBoxLayout* m_Layout_BottomRow;
@@ -60,7 +56,7 @@ private:
 	void initTalentGroup();
 	void setTalentData(TalentGroupNames talentGroupName);
 
-	void initTableWidgetItem();
+	void initLabel();
 	void initLCDNumber();
 	void initSpinbox();
 	void initTableTalentData();
@@ -70,16 +66,15 @@ private:
 	void setTableTalentData(QTableWidget* obj, int columns, int rows);
 	void setTableTalentGroup(QTableWidget *obj, QStringList header, int rows);
 
-	void checkPropertyType(QTableWidgetItem* property, QLCDNumber* display, std::vector<int> values);
-	void addLabelToTalentDataTable(QTableWidget* obj, std::vector<QTableWidgetItem*> label);
+	void checkPropertyType(QLabel* property, QLCDNumber* display, std::vector<int> values);
+	void addLabelToTalentDataTable(QTableWidget* obj, std::vector<QLabel*> label);
 	void addLCDNumberToTalentDataTable(QTableWidget* obj, std::vector<QLCDNumber*> lcdNumber);
 	void addSpinBoxToTalentDataTable(QTableWidget* obj, QSpinBox* spinBox);
 	void addTalentDataToTalentGroupTable(QTableWidget* obj, QTableWidget* talentData, int row);
 	void mergeTalentDataTableCells(QTableWidget* obj);
-	//	<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GUI<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 public:
-	Talents();
+	TalentsGUI();
 
 	QFrame* getFrame() const;
 	void setPropertyValues(int ch, int ge, int in, int kk, int kl, int ko, int mu, int se);

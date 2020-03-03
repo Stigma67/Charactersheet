@@ -6,43 +6,46 @@
 #include <QFrame>
 #include <QLabel>
 #include <QLCDNumber>
-#include <QSpinBox>
+#include "myQtObjects.hpp"
 
-class AdventurePoints
+class AdventurePointsGUI
 {
 private:
-	//	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>GUI>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	QSpinBox* m_SpinBox_APAll = new QSpinBox;
+	struct Layout {
+		QHBoxLayout* hBox_AP;
 
-	struct Layout
-	{
-		QHBoxLayout* hBox_AP = new QHBoxLayout;
+		QVBoxLayout* vBox_APAll;
+		QVBoxLayout* vBox_APUsed;
+		QVBoxLayout* vBox_APRemaining;
 
-		QVBoxLayout* vBox_APAll = new QVBoxLayout;
-		QVBoxLayout* vBox_APUsed = new QVBoxLayout;
-		QVBoxLayout* vBox_APRemaining = new QVBoxLayout;
-	} m_Layout;
+		Layout();
+	};
+	struct Frame {
+		QFrame* APAll;
+		QFrame* APUsed;
+		QFrame* APRemaining;
+		QFrame* AP;
 
-	struct Frame
-	{
-		QFrame* APAll = new QFrame;
-		QFrame* APUsed = new QFrame;
-		QFrame* APRemaining = new QFrame;
-		QFrame* AP = new QFrame;
-	} m_Frame;
+		Frame();
+	};
+	struct Label {
+		QLabel* APAll;
+		QLabel* APUsed;
+		QLabel* APRemaining;
 
-	struct Label
-	{
-		QLabel* APAll = new QLabel;
-		QLabel* APUsed = new QLabel;
-		QLabel* APRemaining = new QLabel;
-	} m_Label;
+		Label();
+	};
+	struct LCDNumber {
+		QLCDNumber* APUsed;
+		QLCDNumber* APRemaining;
 
-	struct LCDNumber
-	{
-		QLCDNumber* APUsed = new QLCDNumber;
-		QLCDNumber* APRemaining = new QLCDNumber;
-	} m_LCD;
+		LCDNumber();
+	};
+	Layout m_Layout;
+	Frame m_Frame;
+	Label m_Label;
+	LCDNumber m_LCD;
+	MySpinBox* m_SpinBox_APAll;
 
 	void initLabel();
 	void initSpinBoxAndLCD();
@@ -51,10 +54,9 @@ private:
 	void initGUI();
 
 	void setFont(QWidget* obj);
-	//	<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GUI<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 public:
-	AdventurePoints();
+	AdventurePointsGUI();
 
 	QFrame* getFrameAdventurePoints();
 };

@@ -42,7 +42,9 @@ else()
 		basePlayerData.cpp
 		socialPlayerData.cpp
 		talents.cpp
-		battleTechniques.cpp)
+		battleTechniques.cpp
+		inventory.cpp
+		myQtObjects.cpp)
 endif()
 
 target_link_libraries(CharacterSheet PRIVATE Qt5::Widgets)
