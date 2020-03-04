@@ -28,8 +28,8 @@ InventoryGUI::MeleeWeaponItems::MeleeWeaponItems()
 , Damage(new QLineEdit)
 , AtatckModification(new MySpinBox)
 , ParadeModification(new MySpinBox)
-, Attack(new MySpinBox)
-, Parade(new MySpinBox)
+, Attack(new QLCDNumber)
+, Parade(new QLCDNumber)
 , Weight(new QLCDNumber)
 {}
 InventoryGUI::RangedWeaponItems::RangedWeaponItems()
@@ -43,10 +43,13 @@ InventoryGUI::RangedWeaponItems::RangedWeaponItems()
 {}
 InventoryGUI::InventoryItems::InventoryItems()
 : Item(new QLineEdit)
+, IsCarryPlace(new QCheckBox)
 , Ammount(new MySpinBox)
 , Value(new MyDoubleSpinBox)
 , Weight(new MyDoubleSpinBox)
 , CarryPlace(new MyComboBox)
+, Layout_IsCarryPlace(new QVBoxLayout)
+, Widget_IsCarryPlace(new QWidget)
 {}
 InventoryGUI::InventoryWAC::InventoryWAC()
 : Item(new QLineEdit)
@@ -61,8 +64,8 @@ void InventoryGUI::initTableWidget() {
 	{"Nahkampfwaffe", "Kampftechnik", "Schaden", "AT Mod.", "PA Mod.", "AT", "PA", "Gewicht (Stein)"});
 	setTableWiget(m_Table.RangedWeapons, 10, 7, 25, {200, 200, 150, 100, 220, 80, 131},
 	{"Fernkampfwaffe", "Kampftechnik", "Nachladezeit", "Munition", "Reichweite", "AT", "Gewicht (Stein)"});
-	setTableWiget(m_Table.InventoryItems, 16, 5, 25, {400, 220, 120, 120, 221},
-	{"Gegenstand", "Anzahl", "Wert", "Gewicht", "Tragplatz"});
+	setTableWiget(m_Table.InventoryItems, 16, 6, 25, {400, 120, 100, 120, 120, 221},
+	{"Gegenstand", "Tragenplatz?", "Anzahl", "Wert", "Gewicht", "Tragplatz"});
 	setTableWiget(m_Table.InventoryWAC, 16, 5, 25, {400, 220, 120, 120, 221},
 	{"Gegenstand", "Typ", "Wert", "Gewicht", "Tragplatz"});
 }
@@ -74,8 +77,8 @@ void InventoryGUI::initMeleeWeaponItems() {
 		setLineEdit(m_MeleeWeaponItems.at(items).Damage, "[Anzahl][Würfel]+...+[Zahl]");
 		setSpinBox(m_MeleeWeaponItems.at(items).AtatckModification, "", -99, 99);
 		setSpinBox(m_MeleeWeaponItems.at(items).ParadeModification, "", -99, 99);
-		setSpinBox(m_MeleeWeaponItems.at(items).Attack, "", -99, 99);
-		setSpinBox(m_MeleeWeaponItems.at(items).Parade, "", -99, 99);
+		setLCDNumber(m_MeleeWeaponItems.at(items).Attack);
+		setLCDNumber(m_MeleeWeaponItems.at(items).Parade);
 		setLCDNumber(m_MeleeWeaponItems.at(items).Weight);
 	}
 
@@ -102,7 +105,8 @@ void InventoryGUI::initInventoryItems() {
 		setSpinBox(m_InventoryItems.at(items).Ammount, " Stück", 0, 999);
 		setDoubleSpinBox(m_InventoryItems.at(items).Value, " Silber");
 		setDoubleSpinBox(m_InventoryItems.at(items).Weight, " Stein");
-		setComboBox(m_InventoryItems.at(items).CarryPlace, /*getCarryPlacesItem()*/{"TODO"});
+		setComboBox(m_InventoryItems.at(items).CarryPlace, {"Arm (Links)", "Arm (Rechts)", "Bein (Links)", "Bein (Rechts)",
+		"Brust", "Fuß (Links)", "Fuß (Rechts)", "Hand (Links)", "Hand (Rechte)", "Rücken"});
 	}
 
 	addItemsToInventoryItemTable(m_Table.InventoryItems, &m_InventoryItems);
@@ -116,7 +120,8 @@ void InventoryGUI::initInventoryWAC() {
 		"Kopfbedeckung (Rüstung)", "Oberteil (Kleidung)", "Oberteil (Rüstung)", "Schuhe (Kleidung)", "Schuhe (Rüstung)"});
 		setDoubleSpinBox(m_InventoryWAC.at(items).Value, " Silber");
 		setDoubleSpinBox(m_InventoryWAC.at(items).Weight, " Stein");
-		setComboBox(m_InventoryWAC.at(items).CarryPlace, /*getCarryPlacesWAC()*/{"TODO"});
+		setComboBox(m_InventoryWAC.at(items).CarryPlace, {"Arm (Links)", "Arm (Rechts)", "Bein (Links)", "Bein (Rechts)",
+		"Brust", "Fuß (Links)", "Fuß (Rechts)", "Hand (Links)", "Hand (Rechte)", "Rücken"});
 	}
 
 	addItemsToInventoryWACTable(m_Table.InventoryWAC, &m_InventoryWAC);
@@ -172,6 +177,8 @@ void InventoryGUI::setTableWiget(QTableWidget* tableWidget, int rows, int column
 	tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 	tableWidget->horizontalHeader()->setFont(QFont("Times New Roman", 14, QFont::Bold));
 	tableWidget->verticalHeader()->setVisible(false);
+	tableWidget->setSelectionMode(QTableWidget::NoSelection);
+	tableWidget->setFocusPolicy(Qt::NoFocus);
 
 	for (int var = 0; var < rows; ++var) {
 		tableWidget->setRowHeight(var, height);
@@ -220,10 +227,17 @@ void InventoryGUI::addItemsToInventoryItemTable(QTableWidget *tableWidget, std::
 	int rows = 0;
 	for (auto& item : *items) {
 		tableWidget->setCellWidget(rows, 0, item.Item);
-		tableWidget->setCellWidget(rows, 1, item.Ammount);
-		tableWidget->setCellWidget(rows, 2, item.Value);
-		tableWidget->setCellWidget(rows, 3, item.Weight);
-		tableWidget->setCellWidget(rows, 4, item.CarryPlace);
+
+		item.Layout_IsCarryPlace->addWidget(item.IsCarryPlace);
+		item.Layout_IsCarryPlace->setAlignment(Qt::AlignCenter);
+		item.Layout_IsCarryPlace->setContentsMargins(0,0,0,0);
+		item.Widget_IsCarryPlace->setLayout(item.Layout_IsCarryPlace);
+		tableWidget->setCellWidget(rows, 1, item.Widget_IsCarryPlace);
+
+		tableWidget->setCellWidget(rows, 2, item.Ammount);
+		tableWidget->setCellWidget(rows, 3, item.Value);
+		tableWidget->setCellWidget(rows, 4, item.Weight);
+		tableWidget->setCellWidget(rows, 5, item.CarryPlace);
 
 		++rows;
 	}

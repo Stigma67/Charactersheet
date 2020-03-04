@@ -1,7 +1,7 @@
 #include "properties.hpp"
 #include <QDebug>
 
-Properties::Properties()
+PropertiesGUI::PropertiesGUI()
 : m_Label(Label())
 , m_SpinBox(SpinBox())
 , m_Layout(Layout())
@@ -9,7 +9,7 @@ Properties::Properties()
 {
 	initGUI();
 }
-Properties::Label::Label()
+PropertiesGUI::Label::Label()
 : MU(new QLabel)
 , KL(new QLabel)
 , IN(new QLabel)
@@ -19,7 +19,7 @@ Properties::Label::Label()
 , KO(new QLabel)
 , KK(new QLabel)
 {}
-Properties::SpinBox::SpinBox()
+PropertiesGUI::SpinBox::SpinBox()
 : MU(new MySpinBox)
 , KL(new MySpinBox)
 , IN(new MySpinBox)
@@ -29,7 +29,7 @@ Properties::SpinBox::SpinBox()
 , KO(new MySpinBox)
 , KK(new MySpinBox)
 {}
-Properties::Layout::Layout()
+PropertiesGUI::Layout::Layout()
 : hBox_Talents(new QHBoxLayout)
 , vBox_MU(new QVBoxLayout)
 , vBox_KL(new QVBoxLayout)
@@ -40,7 +40,7 @@ Properties::Layout::Layout()
 , vBox_KO(new QVBoxLayout)
 , vBox_KK(new QVBoxLayout)
 {}
-Properties::Frame::Frame()
+PropertiesGUI::Frame::Frame()
 : MU(new QFrame)
 , KL(new QFrame)
 , IN(new QFrame)
@@ -52,7 +52,7 @@ Properties::Frame::Frame()
 , Properties(new QFrame)
 {}
 
-void Properties::initLabels() {
+void PropertiesGUI::initLabels() {
 	m_Label.MU->setText("MU");
 	setFont(m_Label.MU);
 
@@ -77,7 +77,7 @@ void Properties::initLabels() {
 	m_Label.KK->setText("KK");
 	setFont(m_Label.KK);
 }
-void Properties::initSpinBoxes() {
+void PropertiesGUI::initSpinBoxes() {
 	m_SpinBox.MU->setRange(0, 30);
 	setFont(m_SpinBox.MU);
 
@@ -102,7 +102,7 @@ void Properties::initSpinBoxes() {
 	m_SpinBox.KK->setRange(0, 30);
 	setFont(m_SpinBox.KK);
 }
-void Properties::initLayouts() {
+void PropertiesGUI::initLayouts() {
 	m_Layout.vBox_MU->addWidget(m_Label.MU);
 	m_Layout.vBox_KL->addWidget(m_Label.KL);
 	m_Layout.vBox_IN->addWidget(m_Label.IN);
@@ -130,7 +130,7 @@ void Properties::initLayouts() {
 	m_Layout.hBox_Talents->addWidget(m_Frame.KO);
 	m_Layout.hBox_Talents->addWidget(m_Frame.KK);
 }
-void Properties::initFrames() {
+void PropertiesGUI::initFrames() {
 	m_Frame.MU->setLayout(m_Layout.vBox_MU);
 	setFrameColor(m_Frame.MU, "230", "0", "0");
 
@@ -157,20 +157,20 @@ void Properties::initFrames() {
 
 	m_Frame.Properties->setLayout(m_Layout.hBox_Talents);
 }
-void Properties::initGUI() {
+void PropertiesGUI::initGUI() {
 	initLabels();
 	initSpinBoxes();
 	initLayouts();
 	initFrames();
 }
 
-void Properties::setFont(QWidget* obj) {
+void PropertiesGUI::setFont(QWidget* obj) {
 	obj->setFont(QFont("Times New Roman", 14));
 }
-void Properties::setFrameColor(QFrame* obj, QString red, QString green, QString blue) {
+void PropertiesGUI::setFrameColor(QFrame* obj, QString red, QString green, QString blue) {
 	obj->setStyleSheet("border-color: rgb("+red+", "+green+", "+blue+"); border-width: 2px; border-style: inset;");
 }
 
-QFrame* Properties::getFrameProperties() {
+QFrame* PropertiesGUI::getFrameProperties() {
 	return m_Frame.Properties;
 }

@@ -210,3 +210,114 @@ void BasePlayerDataGUI::setFont(QWidget *obj, int size) {
 QFrame* BasePlayerDataGUI::getFrameBasePlayerData() {
 	return m_Frame.BasePlayerData;
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+
+BasePlayerData::BasePlayerData()
+: m_Age(0)
+, m_BirthDay(0)
+, m_BirthMonth(0)
+, m_BirthYear(0)
+, m_BirthplaceCity("")
+, m_BirthplaceCountry("")
+, m_BirthplaceRegion("")
+, m_CultureMainGoup("")
+, m_CultureSubGoup("")
+, m_EyeColor("")
+, m_Forename("")
+, m_Gender("")
+, m_HairColor("")
+, m_Player("")
+, m_Surname("")
+{}
+
+void BasePlayerData::setAge(int value) {
+	m_Age = value;
+}
+void BasePlayerData::setBirthDay(int value) {
+	m_BirthDay = value;
+}
+void BasePlayerData::setBirthMonth(int value) {
+	m_BirthMonth = value;
+}
+void BasePlayerData::setBirthYear(int value) {
+	m_BirthYear = value;
+}
+void BasePlayerData::setBirthplaceCity(std::string var) {
+	m_BirthplaceCity = var;
+}
+void BasePlayerData::setBirthplaceCountry(std::string var) {
+	m_BirthplaceCountry = var;
+}
+void BasePlayerData::setBirthplaceRegion(std::string var) {
+	m_BirthplaceRegion = var;
+}
+void BasePlayerData::setCultureMainGoup(std::string var) {
+	m_CultureMainGoup = var;
+}
+void BasePlayerData::setCultureSubGoup(std::string var) {
+	m_CultureSubGoup = var;
+}
+void BasePlayerData::setEyeColor(std::string var) {
+	m_EyeColor = var;
+}
+void BasePlayerData::setForename(std::string var) {
+	m_Forename = var;
+}
+void BasePlayerData::setGender(std::string var) {
+	m_Gender = var;
+}
+void BasePlayerData::setHairColor(std::string var) {
+	m_HairColor = var;
+}
+void BasePlayerData::setPlayer(std::string var) {
+	m_Player = var;
+}
+void BasePlayerData::setSurname(std::string var) {
+	m_Surname = var;
+}
+int BasePlayerData::getAge() const {
+	return m_Age;
+}
+int BasePlayerData::getBirthDay() const {
+	return m_BirthDay;
+}
+int BasePlayerData::getBirthMonth() const {
+	return m_BirthMonth;
+}
+int BasePlayerData::getBirthYear() const {
+	return m_BirthYear;
+}
+std::string BasePlayerData::getBirthplaceCity() const {
+	return m_BirthplaceCity;
+}
+std::string BasePlayerData::getBirthplaceCountry() const {
+	return m_BirthplaceCountry;
+}
+std::string BasePlayerData::getBirthplaceRegion() const {
+	return m_BirthplaceRegion;
+}
+std::string BasePlayerData::getCultureMainGoup() const {
+	return m_CultureMainGoup;
+}
+std::string BasePlayerData::getCultureSubGoup() const {
+	return m_CultureSubGoup;
+}
+std::string BasePlayerData::getEyeColor() const {
+	return m_EyeColor;
+}
+std::string BasePlayerData::getForename() const {
+	return m_Forename;
+}
+std::string BasePlayerData::getGender() const {
+	return m_Gender;
+}
+std::string BasePlayerData::getHairColor() const {
+	return m_HairColor;
+}
+std::string BasePlayerData::getPlayer() const {
+	return m_Player;
+}
+std::string BasePlayerData::getSurname() const {
+	return m_Surname;
+}

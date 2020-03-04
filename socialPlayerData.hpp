@@ -8,7 +8,7 @@
 #include <QFrame>
 #include "myQtObjects.hpp"
 
-class SocialPlayerData
+class SocialPlayerDataGUI
 {
 private:
 	struct ComboBox {
@@ -68,7 +68,7 @@ private:
 	void initGUI();
 
 public:
-	SocialPlayerData();
+	SocialPlayerDataGUI();
 
 	QFrame* getFrameSocialPlayerData();
 };

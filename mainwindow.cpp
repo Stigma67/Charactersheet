@@ -4,10 +4,10 @@
 MainWindow::MainWindow(QWidget* parent)
 : QMainWindow(parent)
 , m_Entity(EntityGUI())
-, m_Properties(Properties())
+, m_Properties(PropertiesGUI())
 , m_AdventurePoints(AdventurePointsGUI())
 , m_BasePlayerData(BasePlayerDataGUI())
-, m_SocialPlayerData(SocialPlayerData())
+, m_SocialPlayerData(SocialPlayerDataGUI())
 , m_Talents(TalentsGUI())
 , m_BattleTechniques(BattleTechniquesGUI())
 , m_InventoryGUI(InventoryGUI())
@@ -73,7 +73,7 @@ MainWindow::Layout::Layout()
 , vBox_Inventory(new QVBoxLayout)
 {}
 
-void MainWindow::combinePropertiesAndAP(Properties properties, AdventurePointsGUI adventurePoints) {
+void MainWindow::combinePropertiesAndAP(PropertiesGUI properties, AdventurePointsGUI adventurePoints) {
 	m_Frame.Line_PropertiesAP->setFrameStyle(QFrame::VLine | QFrame::Plain);
 	m_Frame.Line_PropertiesAP->setLineWidth(3);
 

@@ -5,7 +5,7 @@
 #include <QLabel>
 #include "myQtObjects.hpp"
 
-class Properties
+class PropertiesGUI
 {
 private:
 	struct Label {
@@ -74,7 +74,7 @@ private:
 	void setFont(QWidget* obj);
 
 public:
-	Properties();
+	PropertiesGUI();
 
 	QFrame* getFrameProperties();
 

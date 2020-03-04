@@ -39,8 +39,8 @@ private:
 		QLineEdit* Damage;
 		MySpinBox* AtatckModification;
 		MySpinBox* ParadeModification;
-		MySpinBox* Attack;
-		MySpinBox* Parade;
+		QLCDNumber* Attack;
+		QLCDNumber* Parade;
 		QLCDNumber* Weight;
 
 		MeleeWeaponItems();
@@ -64,10 +64,13 @@ private:
 	//	};
 	struct InventoryItems {
 		QLineEdit* Item;
+		QCheckBox* IsCarryPlace;
 		MySpinBox* Ammount;
 		MyDoubleSpinBox* Value;
 		MyDoubleSpinBox* Weight;
 		MyComboBox* CarryPlace;
+		QVBoxLayout* Layout_IsCarryPlace;
+		QWidget* Widget_IsCarryPlace;
 
 		InventoryItems();
 	};

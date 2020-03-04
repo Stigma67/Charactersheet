@@ -112,4 +112,57 @@ public:
 	QFrame* getFrameBasePlayerData();
 };
 
+class BasePlayerData {
+private:
+	int m_Age;
+	int m_BirthDay;
+	int m_BirthMonth;
+	int m_BirthYear;
+	std::string m_BirthplaceCity;
+	std::string m_BirthplaceCountry;
+	std::string m_BirthplaceRegion;
+	std::string m_CultureMainGoup;
+	std::string m_CultureSubGoup;
+	std::string m_EyeColor;
+	std::string m_Forename;
+	std::string m_Gender;
+	std::string m_HairColor;
+	std::string m_Player;
+	std::string m_Surname;
+
+public:
+	BasePlayerData();
+
+	void setAge(int value);
+	void setBirthDay(int value);
+	void setBirthMonth(int value);
+	void setBirthYear(int value);
+	void setBirthplaceCity(std::string var);
+	void setBirthplaceCountry(std::string var);
+	void setBirthplaceRegion(std::string var);
+	void setCultureMainGoup(std::string var);
+	void setCultureSubGoup(std::string var);
+	void setEyeColor(std::string var);
+	void setForename(std::string var);
+	void setGender(std::string var);
+	void setHairColor(std::string var);
+	void setPlayer(std::string var);
+	void setSurname(std::string var);
+	int getAge() const;
+	int getBirthDay() const;
+	int getBirthMonth() const;
+	int getBirthYear() const;
+	std::string getBirthplaceCity() const;
+	std::string getBirthplaceCountry() const;
+	std::string getBirthplaceRegion() const;
+	std::string getCultureMainGoup() const;
+	std::string getCultureSubGoup() const;
+	std::string getEyeColor() const;
+	std::string getForename() const;
+	std::string getGender() const;
+	std::string getHairColor() const;
+	std::string getPlayer() const;
+	std::string getSurname() const;
+};
+
 #endif // BASEPLAYERDATA_HPP

@@ -83,7 +83,12 @@ public:
 	QFrame* getFrameEntity();
 };
 
-//double m_Weight, m_Height, m_Health, m_Mana;
-//std::string m_Species;
-//bool m_Magical;
+
+class Entity {
+public:
+
+private:
+
+};
+
 #endif // ENTITY_HPP

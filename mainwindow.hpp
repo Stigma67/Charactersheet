@@ -53,15 +53,15 @@ private:
 	Layout m_Layout;
 
 	EntityGUI m_Entity;
-	Properties m_Properties;
+	PropertiesGUI m_Properties;
 	AdventurePointsGUI m_AdventurePoints;
 	BasePlayerDataGUI m_BasePlayerData;
-	SocialPlayerData m_SocialPlayerData;
+	SocialPlayerDataGUI m_SocialPlayerData;
 	TalentsGUI m_Talents;
 	BattleTechniquesGUI m_BattleTechniques;
 	InventoryGUI m_InventoryGUI;
 
-	void combinePropertiesAndAP(Properties m_Properties, AdventurePointsGUI m_AdventurePoints);
+	void combinePropertiesAndAP(PropertiesGUI m_Properties, AdventurePointsGUI m_AdventurePoints);
 
 public:
 	MainWindow(QWidget* parent = nullptr);
